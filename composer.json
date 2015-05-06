@@ -1,0 +1,23 @@
+{
+  "name": "media24si/api-resource",
+  "description": "Laravel 5 Guzzle Api Resource Package",
+  "license": "MIT",
+  "keywords": ["laravel", "laravel 5", "guzzle", "rest client"],
+  "homepage": "https://github.com/Media24si/RouteExplore",
+  "authors": [
+    {
+      "name": "Bostjan Oblak",
+      "email": "bostjan@muha.cc"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "laravel/framework": "5.0.*",
+    "guzzlehttp/guzzle": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Media24si\\ApiResource\\": "src/"
+    }
+  }
+}
