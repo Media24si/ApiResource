@@ -2,11 +2,11 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-Simple guzzle wrapper to provide simple access to api endpoints.
+A simple Guzzle wrapper, providing easy access to API endpoints.
 
 ## Install
 
-Require this package with composer (Packagist) using the following command:
+Require this package with Composer (Packagist), using the following command:
 
 ``` bash
 $ composer require media24si/api-resource
@@ -24,39 +24,39 @@ $ art vendor:publish
 ```
 
 **Optional**
-Register facade in `config/app.php`:
+Register the facade in `config/app.php`:
 ``` php
 'Api' => 'Media24si\ApiResource\Facades\ApiResource'
 ```
 
 ## Usage
 
-You can use package without configuration. Just use \Api facade in controllre (or inject Media24si\ApiResource\ApiResource in function/controler).
+You can use this package without any configuration. Just use the \Api facade in your controller (or inject Media24si\ApiResource\ApiResource in your function/controller).
 
-Call your endpoints as normal guzzle request:
+Call your endpoints, like you would a normal Guzzle request:
 ``` php
-\Api::get('http://httpbin.org'); // you get response object
+\Api::get('http://httpbin.org'); // returns a response object
 ```
 
 ## Config
 
 **base_url**
-Configures a base URL for the client so that requests created using a relative URL are combined with the base_url. Same as guzzle base_url (see offcial manual).
+Configures a base URL for the client, so that requests created using a relative URL are combined with the base_url. Same as guzzle base_url. For more, see the official [manual].
 
 **defaults**
-Associative array of Request Options that are applied to every request created by the client. See official manual.
+Associative array of Request Options that are applied to every request created by the client. See the official [manual].
 
 **default_response**
-Set default response type from functions.
+Set a default response type returned from functions.
 Possible options:
 - json
 - xml
 - empty (default)
 
-Setting this to json and calling `\Api::get('endpoint')` is same as leaving it empy and call `\Api::get('endpoint')->json()`
+Setting the default response to `json` and calling `\Api::get('endpoint')` is effectively the same as leaving it empty and calling `\Api::get('endpoint')->json()`
 
 **endpoints**
-Array of defined endpoints. Here you can define your aliases for calling endpoints.
+Array of defined endpoints. Here you can define your aliases for endpoints.
 
 Sample array:
 ``` php
@@ -75,9 +75,18 @@ Sample array:
 ]
 ```
 
-With endpoints defined you can make simple call `\Api::get('notification')`.
-Default options can be overwriten `\Api::get('categories', ['query' => ['fields' => 'id, title, slug']])`.
+With endpoints defined you can make simple calls. A sample would be: 
+``` php
+\Api::get('notification')
+```
+
+Default options can be overridden: 
+``` php
+\Api::get('categories', ['query' => ['fields' => 'id, title, slug']])
+```
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[manual]: http://guzzle.readthedocs.org/en/latest/
