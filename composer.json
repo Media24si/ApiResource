@@ -3,7 +3,7 @@
   "description": "Laravel 5 Guzzle Api Resource Package",
   "license": "MIT",
   "keywords": ["laravel", "laravel 5", "guzzle", "rest client"],
-  "homepage": "https://github.com/Media24si/RouteExplore",
+  "homepage": "https://github.com/Media24si/ApiResource",
   "authors": [
     {
       "name": "Bostjan Oblak",
