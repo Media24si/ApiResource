@@ -20,7 +20,7 @@ return [
 	/**
 	 * Define your endpoints
 	 *
-	 * Example enpoint:
+	 * Example endpoint:
 	 * 'endpoint' => [
 	 *		'url' => '',
 	 *		'options' => []
