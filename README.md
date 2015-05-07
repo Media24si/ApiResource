@@ -46,15 +46,6 @@ Configures a base URL for the client, so that requests created using a relative 
 **defaults**
 Associative array of Request Options that are applied to every request created by the client. See the official [manual].
 
-**default_response**
-Set a default response type returned from functions.
-Possible options:
-- json
-- xml
-- empty (default)
-
-Setting the default response to `json` and calling `\Api::get('endpoint')` is effectively the same as leaving it empty and calling `\Api::get('endpoint')->json()`
-
 **endpoints**
 Array of defined endpoints. Here you can define your aliases for endpoints.
 

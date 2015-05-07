@@ -1,6 +1,7 @@
 <?php namespace Media24si\ApiResource;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Message\RequestInterface;
 
 class ApiResource extends Client {
@@ -9,11 +10,6 @@ class ApiResource extends Client {
 	 * @var array
 	 */
 	private $endpoints;
-
-	/**
-	 * @var string
-	 */
-	private $default_response;
 
 	/**
 	 * ApiResource constructor.
@@ -28,20 +24,21 @@ class ApiResource extends Client {
 		);
 
 		$this->endpoints = config('apiresource.endpoints');
-		$this->default_response = config('apiresource.default_response');
 	}
 
 	public function send(RequestInterface $request)
 	{
 		$result = parent::send($request);
 
-		switch ($this->default_response) {
-			case 'json':
+		switch ($result->getHeader('content-type')) {
+			case 'text/json':
+			case 'application/json':
 				return $result->json();
-			case 'xml':
+			case 'text/xml':
+			case 'application/xml':
 				return $result->xml();
-
 		}
+
 		return $result;
 	}
 
@@ -52,7 +49,7 @@ class ApiResource extends Client {
 			$key = $url;
 			$url = $this->endpoints[$key]['url'];
 
-			if ( is_array($this->endpoints[$key]['options']) ) {
+			if ( isset($this->endpoints[$key]['options']) && is_array($this->endpoints[$key]['options']) ) {
 				$options = array_replace_recursive($this->endpoints[$key]['options'], $options);
 			}
 		}

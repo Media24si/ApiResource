@@ -18,13 +18,6 @@ return [
 	],
 
 	/**
-	 * Default response
-	 *
-	 * Possible options: json, xml, empty
-	 */
-	'default_response' => '',
-
-	/**
 	 * Define your endpoints
 	 *
 	 * Example enpoint:
