@@ -40,13 +40,13 @@ Call your endpoints, like you would a normal Guzzle request:
 
 ## Config
 
-**base_url**
+#### base_url
 Configures a base URL for the client, so that requests created using a relative URL are combined with the base_url. Same as guzzle base_url. For more, see the official [manual].
 
-**defaults**
+#### defaults
 Associative array of Request Options that are applied to every request created by the client. See the official [manual].
 
-**endpoints**
+#### endpoints
 Array of defined endpoints. Here you can define your aliases for endpoints.
 
 Sample array:
@@ -76,8 +76,8 @@ Default options can be overridden:
 \Api::get('categories', ['query' => ['fields' => 'id, title, slug']])
 ```
 
-**event-subscribers**
-Attact event subscribers to emmiter.
+#### event-subscribers
+Attach event subscribers to emmiter.
 You can add subscriber as class name or as a Closure. All classes **must** implement ```GuzzleHttp\Event\SubscriberInterface```
 
 Sample:
