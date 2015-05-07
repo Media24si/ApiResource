@@ -44,7 +44,7 @@ Call your endpoints, like you would a normal Guzzle request:
 Configures a base URL for the client, so that requests created using a relative URL are combined with the base_url. Same as guzzle base_url. For more, see the official [manual].
 
 #### defaults
-Associative array of Request Options that are applied to every request created by the client. See the official [manual].
+Associative array of Request Options, that are applied to every request, created by the client. See the official [manual].
 
 #### endpoints
 Array of defined endpoints. Here you can define your aliases for endpoints.
@@ -77,8 +77,8 @@ Default options can be overridden:
 ```
 
 #### event-subscribers
-Attach event subscribers to emmiter.
-You can add subscriber as class name or as a Closure. All classes **must** implement ```GuzzleHttp\Event\SubscriberInterface```
+Attach event subscribers to an emmiter.
+You can add a subscriber as a class name (string) or a Closure. All classes **must** implement the ```GuzzleHttp\Event\SubscriberInterface```
 
 Sample:
 ``` php
