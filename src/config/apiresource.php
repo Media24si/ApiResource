@@ -18,6 +18,19 @@ return [
 	],
 
 	/**
+	 * Event subscribers attached to client
+	 * See: http://guzzle.readthedocs.org/en/latest/events.html#event-subscribers
+	 *
+	 * It support string or Closure.
+	 * Example:
+	 * 	'App\EventSubscriber',
+	 * 	function() { return new App\EventSubscriber(); }
+	 */
+	'event-subscribers' => [
+	],
+
+
+	/**
 	 * Define your endpoints
 	 *
 	 * Example endpoint:

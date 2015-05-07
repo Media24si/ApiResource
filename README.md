@@ -76,6 +76,18 @@ Default options can be overridden:
 \Api::get('categories', ['query' => ['fields' => 'id, title, slug']])
 ```
 
+**event-subscribers**
+Attact event subscribers to emmiter.
+You can add subscriber as class name or as a Closure. All classes **must** implement ```GuzzleHttp\Event\SubscriberInterface```
+
+Sample:
+``` php
+'event-subscribers' => [
+	'App\EventSubscriber',
+	function() { return new App\EventSubscriber(); }
+],
+```
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
