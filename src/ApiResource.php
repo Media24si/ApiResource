@@ -61,7 +61,7 @@ class ApiResource extends Client {
 		switch ($result->getHeader('content-type')) {
 			case 'text/json':
 			case 'application/json':
-				return $result->json();
+				return collect($result->json());
 			case 'text/xml':
 			case 'application/xml':
 				return $result->xml();
