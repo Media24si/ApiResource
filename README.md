@@ -4,6 +4,8 @@
 
 A simple Guzzle wrapper, providing easy access to API endpoints.
 
+**For Guzzle v5.0 support use v1.0.0**
+
 ## Install
 
 Require this package with Composer (Packagist), using the following command:

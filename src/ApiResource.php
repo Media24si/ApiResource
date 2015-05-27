@@ -1,106 +1,82 @@
 <?php namespace Media24si\ApiResource;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Message\RequestInterface;
-use Symfony\Component\Debug\Exception\ClassNotFoundException;
+//use Symfony\Component\Debug\Exception\ClassNotFoundException;
 
-class ApiResource extends Client {
+class ApiResource extends Client
+{
 
-	/**
-	 * @var array
-	 */
-	private $endpoints;
+    /**
+     * @var array
+     */
+    private $endpoints;
 
-	/**
-	 * ApiResource constructor.
-	 */
-	public function __construct()
-	{
-		parent::__construct(
-			[
-				'base_url' => config('apiresource.base_url'),
-				'defaults' => config('apiresource.defaults')
-			]
-		);
+    /**
+     * ApiResource constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct(config('apiresource.defaults'));
 
-		$this->endpoints = config('apiresource.endpoints');
+        $this->endpoints = config('apiresource.endpoints');
 
-		$this->setSubscribers();
-	}
+        //$this->setSubscribers();
+    }
 
-	protected function setSubscribers() {
-		$emitter = $this->getEmitter();
+    /*
+    protected function setSubscribers()
+    {
+        /*
+        $emitter = $this->getEmitter();
 
-		$subscribers = config('apiresource.event-subscribers');
+        $subscribers = config('apiresource.event-subscribers');
 
-		foreach( $subscribers as $subscriber) {
-			if ( is_string($subscriber) ) {
-				if ( !class_exists($subscriber) ) {
-					throw new ClassNotFoundException();
-				}
+        foreach ($subscribers as $subscriber) {
+            if (is_string($subscriber)) {
+                if (!class_exists($subscriber)) {
+                    throw new ClassNotFoundException();
+                }
 
-				$eventSubscriber = new $subscriber();
-			}
-			else if ( $subscriber instanceof \Closure ) {
-				$eventSubscriber = $subscriber();
-			}
+                $eventSubscriber = new $subscriber();
+            } else {
+                if ($subscriber instanceof \Closure) {
+                    $eventSubscriber = $subscriber();
+                }
+            }
 
-			if ( !is_a($eventSubscriber, 'GuzzleHttp\Event\SubscriberInterface') ) {
-				throw new \InvalidArgumentException('Class must implement GuzzleHttp\Event\SubscriberInterface');
-			}
+            if (!is_a($eventSubscriber, 'GuzzleHttp\Event\SubscriberInterface')) {
+                throw new \InvalidArgumentException('Class must implement GuzzleHttp\Event\SubscriberInterface');
+            }
 
-			$emitter->attach($eventSubscriber);
-		}
-	}
+            $emitter->attach($eventSubscriber);
+        }
+    }*/
 
-	public function send(RequestInterface $request)
-	{
-		$result = parent::send($request);
+    public function request($method, $uri = null, array $options = [])
+    {
+        // overwrite from endpoints
+        if (isset($this->endpoints[$uri])) {
+            $key = $uri;
+            $uri = $this->endpoints[$key]['uri'];
 
-		switch ($result->getHeader('content-type')) {
-			case 'text/json':
-			case 'application/json':
-				return collect($result->json());
-			case 'text/xml':
-			case 'application/xml':
-				return $result->xml();
-		}
+            if (isset($this->endpoints[$key]['options']) && is_array($this->endpoints[$key]['options'])) {
+                $options = array_replace_recursive($this->endpoints[$key]['options'], $options);
+            }
+        }
 
-		return $result;
-	}
+        $response = parent::request($method, $uri, $options);
 
-	public function createRequest($method, $url = null, array $options = [])
-	{
-		// overwrite from endpoints
-		if ( isset($this->endpoints[$url]) ) {
-			$key = $url;
-			$url = $this->endpoints[$key]['url'];
+        if ($response->hasHeader('Content-Type')) {
+            switch ($response->getHeader('Content-Type')[0]) {
+                case 'text/json':
+                case 'application/json':
+                    return collect( json_decode( $response->getBody() ));
+                case 'text/xml':
+                case 'application/xml':
+                    return $response->xml();
+            }
+        }
 
-			if ( isset($this->endpoints[$key]['options']) && is_array($this->endpoints[$key]['options']) ) {
-				$options = array_replace_recursive($this->endpoints[$key]['options'], $options);
-			}
-		}
-
-		return parent::createRequest($method, $url, $options);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getDefaultResponse()
-	{
-		return $this->default_response;
-	}
-
-	/**
-	 * @param string $default_response
-	 */
-	public function setDefaultResponse($default_response)
-	{
-		$this->default_response = $default_response;
-		return $this;
-	}
-
-
+        return $response;
+    }
 }
