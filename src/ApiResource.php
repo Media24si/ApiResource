@@ -71,9 +71,6 @@ class ApiResource extends Client
                 case 'text/json':
                 case 'application/json':
                     return collect( json_decode( $response->getBody() ));
-                case 'text/xml':
-                case 'application/xml':
-                    return $response->xml();
             }
         }
 

@@ -42,11 +42,14 @@ Call your endpoints, like you would a normal Guzzle request:
 
 ## Config
 
-#### base_url
-Configures a base URL for the client, so that requests created using a relative URL are combined with the base_url. Same as guzzle base_url. For more, see the official [manual].
-
 #### defaults
-Associative array of Request Options, that are applied to every request, created by the client. See the official [manual].
+Associative array of Request Options, that are applied to every request, created by the client. See the official [manual](http://guzzle.readthedocs.org/en/latest/quickstart.html#creating-a-client) .
+
+Example:
+``` php
+'defaults' => [
+	'base_uri' => 'http://httpbin.org/']
+]
 
 #### endpoints
 Array of defined endpoints. Here you can define your aliases for endpoints.
@@ -55,10 +58,10 @@ Sample array:
 ``` php
 'endpoints' => [
 	'notification' => [
-		'url' => 'http://httpbin.org/notification'
+		'uri' => 'http://httpbin.org/notification'
 	],
 	'categories' => [
-		'url' => '/categories', // with base_url set
+		'uri' => '/categories', // with base_uri set
 		'options' => [
 			'query' => [
 				'fields' => 'id, title'
@@ -76,18 +79,6 @@ With endpoints defined you can make simple calls. A sample would be:
 Default options can be overridden: 
 ``` php
 \Api::get('categories', ['query' => ['fields' => 'id, title, slug']])
-```
-
-#### event-subscribers
-Attach event subscribers to an emmiter.
-You can add a subscriber as a class name (string) or a Closure. All classes **must** implement the ```GuzzleHttp\Event\SubscriberInterface```
-
-Sample:
-``` php
-'event-subscribers' => [
-	'App\EventSubscriber',
-	function() { return new App\EventSubscriber(); }
-],
 ```
 
 ## License
