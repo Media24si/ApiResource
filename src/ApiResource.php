@@ -70,7 +70,7 @@ class ApiResource extends Client
             switch ($response->getHeader('Content-Type')[0]) {
                 case 'text/json':
                 case 'application/json':
-                    return collect( json_decode( $response->getBody() ));
+                    return json_decode( $response->getBody() );
             }
         }
 
