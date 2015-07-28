@@ -17,7 +17,7 @@ $ composer require media24si/api-resource
 Register the ApiResourceServiceProvider to the providers array in `config/app.php`
 
 ``` php
-'Media24si\ApiResource\ApiResourceServiceProvider',
+Media24si\ApiResource\ApiResourceServiceProvider::class,
 ```
 
 Publish vendor files (config file):
@@ -28,7 +28,7 @@ $ art vendor:publish
 **Optional**
 Register the facade in `config/app.php`:
 ``` php
-'Api' => 'Media24si\ApiResource\Facades\ApiResource'
+'Api' => Media24si\ApiResource\Facades\ApiResource::class
 ```
 
 ## Usage
@@ -71,12 +71,12 @@ Sample array:
 ]
 ```
 
-With endpoints defined you can make simple calls. A sample would be: 
+With endpoints defined you can make simple calls. A sample would be:
 ``` php
 \Api::get('notification')
 ```
 
-Default options can be overridden: 
+Default options can be overridden:
 ``` php
 \Api::get('categories', ['query' => ['fields' => 'id, title, slug']])
 ```

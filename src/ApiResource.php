@@ -1,7 +1,8 @@
-<?php namespace Media24si\ApiResource;
+<?php
+
+namespace Media24si\ApiResource;
 
 use GuzzleHttp\Client;
-//use Symfony\Component\Debug\Exception\ClassNotFoundException;
 
 class ApiResource extends Client
 {
@@ -19,38 +20,7 @@ class ApiResource extends Client
         parent::__construct(config('apiresource.defaults'));
 
         $this->endpoints = config('apiresource.endpoints');
-
-        //$this->setSubscribers();
     }
-
-    /*
-    protected function setSubscribers()
-    {
-        /*
-        $emitter = $this->getEmitter();
-
-        $subscribers = config('apiresource.event-subscribers');
-
-        foreach ($subscribers as $subscriber) {
-            if (is_string($subscriber)) {
-                if (!class_exists($subscriber)) {
-                    throw new ClassNotFoundException();
-                }
-
-                $eventSubscriber = new $subscriber();
-            } else {
-                if ($subscriber instanceof \Closure) {
-                    $eventSubscriber = $subscriber();
-                }
-            }
-
-            if (!is_a($eventSubscriber, 'GuzzleHttp\Event\SubscriberInterface')) {
-                throw new \InvalidArgumentException('Class must implement GuzzleHttp\Event\SubscriberInterface');
-            }
-
-            $emitter->attach($eventSubscriber);
-        }
-    }*/
 
     public function request($method, $uri = null, array $options = [])
     {
