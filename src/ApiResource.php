@@ -37,10 +37,10 @@ class ApiResource extends Client
         $response = parent::request($method, $uri, $options);
 
         if ($response->hasHeader('Content-Type')) {
-            switch ($response->getHeader('Content-Type')[0]) {
-                case 'text/json':
-                case 'application/json':
-                    return json_decode( $response->getBody() );
+            $contentType = $response->getHeader('Content-Type')[0];
+
+            if ( str_contains($contentType, '/json') ) {
+                return json_decode( $response->getBody() );
             }
         }
 
