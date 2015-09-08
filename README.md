@@ -6,7 +6,7 @@ A simple Guzzle wrapper, providing easy access to API endpoints.
 
 **For Guzzle v5.0 support use v1.0.0**
 
-## Install
+## Install - Laravel
 
 Require this package with Composer (Packagist), using the following command:
 
@@ -14,7 +14,7 @@ Require this package with Composer (Packagist), using the following command:
 $ composer require media24si/api-resource
 ```
 
-Register the ApiResourceServiceProvider to the providers array in `config/app.php`
+Register the ApiResourceServiceProvider to the providers array in `config/app.php`:
 
 ``` php
 Media24si\ApiResource\ApiResourceServiceProvider::class,
@@ -22,13 +22,42 @@ Media24si\ApiResource\ApiResourceServiceProvider::class,
 
 Publish vendor files (config file):
 ``` bash
-$ art vendor:publish
+$ php artisan vendor:publish
 ```
 
 **Optional**
 Register the facade in `config/app.php`:
 ``` php
 'Api' => Media24si\ApiResource\Facades\ApiResource::class
+```
+
+## Install - Lumen
+
+Require this package with Composer (Packagist), using the following command:
+
+``` bash
+$ composer require media24si/api-resource
+```
+
+Register the ApiResourceServiceProvider inside `bootstrap/app.php` (Lumen):
+
+``` php
+$app->register(Media24si\ApiResource\ApiResourceServiceProvider::class);
+```
+
+Copy the config file from the vendor `vendor/media24si/api-resource/src/config/apiresrouce.php` to your local config folder `config/apiresource.php` and enable the config inside your `bootstrap/app.php` (Lumen):
+``` php
+$app->configure('apiresource');
+```
+
+**Optional**
+Register the facade in `bootstrap/app.php` (Lumen):
+``` php
+class_alias(Media24si\ApiResource\Facades\ApiResource::class, 'Api');
+```
+also, make sure you uncomment this line from the same file:
+``` php
+$app->withFacades();
 ```
 
 ## Usage
