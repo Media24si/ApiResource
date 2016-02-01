@@ -14,6 +14,12 @@ return [
 	],
 
 	/**
+	 * Merge params on request
+	 */
+	'merge' => [
+	],
+
+	/**
 	 * Define your endpoints
 	 *
 	 * Example endpoint:
