@@ -25,7 +25,7 @@ class ApiResource extends Client
     public function request($method, $uri = null, array $options = [])
     {
         if(config('apiresource.merge')) {
-            $options = array_replace_recursive($options, config('apiresource.merge'));
+            $options = array_replace_recursive(config('apiresource.merge', []), $options);
         }
 
         // overwrite from endpoints
