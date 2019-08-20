@@ -19,5 +19,15 @@
     "psr-4": {
       "Media24si\\ApiResource\\": "src/"
     }
-  }
+  },
+  "extra": {
+      "laravel": {
+          "providers": [
+              "Media24si\\ApiResource\\ApiResourceServiceProvider"
+          ],
+          "aliases": {
+              "Api": "Media24si\\ApiResource\\Facades\\ApiResource"
+          }
+      }
+  },
 }
