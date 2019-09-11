@@ -3,6 +3,7 @@
 namespace Media24si\ApiResource;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 
 class ApiResource extends Client
 {
@@ -43,7 +44,7 @@ class ApiResource extends Client
         if ($response->hasHeader('Content-Type')) {
             $contentType = $response->getHeader('Content-Type')[0];
 
-            if ( str_contains($contentType, '/json') ) {
+            if ( Str::contains($contentType, '/json') ) {
                 return json_decode( $response->getBody() );
             }
         }
