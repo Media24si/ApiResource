@@ -4,28 +4,41 @@ namespace Media24si\ApiResource;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseInterface;
 
-class ApiResource extends Client
+class ApiResource
 {
+    private Client $client;
 
-    /**
-     * @var array
-     */
-    private $endpoints;
+    private array $endpoints;
 
     /**
      * ApiResource constructor.
      */
     public function __construct()
     {
-        parent::__construct(config('apiresource.defaults'));
-
+        $this->client = new Client(config('apiresource.defaults'));
         $this->endpoints = config('apiresource.endpoints');
     }
 
-    public function request($method, $uri = null, array $options = [])
+    public function get($uri, array $options = [])
     {
-        if(config('apiresource.merge')) {
+        $response = $this->request('GET', $uri, $options);
+
+        if ($response->hasHeader('Content-Type')) {
+            $contentType = $response->getHeader('Content-Type')[0];
+
+            if (Str::contains($contentType, '/json')) {
+                return json_decode($response->getBody());
+            }
+        }
+
+        return $response;
+    }
+
+    public function request(string $method, $uri = '', array $options = []): ResponseInterface
+    {
+        if (config('apiresource.merge')) {
             $options = array_replace_recursive(config('apiresource.merge', []), $options);
         }
 
@@ -39,16 +52,6 @@ class ApiResource extends Client
             }
         }
 
-        $response = parent::request($method, $uri, $options);
-
-        if ($response->hasHeader('Content-Type')) {
-            $contentType = $response->getHeader('Content-Type')[0];
-
-            if ( Str::contains($contentType, '/json') ) {
-                return json_decode( $response->getBody() );
-            }
-        }
-
-        return $response;
+        return $this->client->request($method, $uri, $options);
     }
 }
