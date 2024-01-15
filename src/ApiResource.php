@@ -36,6 +36,21 @@ class ApiResource
         return $response;
     }
 
+    public function post($uri, array $options = [])
+    {
+        $response = $this->request('POST', $uri, $options);
+
+        if ($response->hasHeader('Content-Type')) {
+            $contentType = $response->getHeader('Content-Type')[0];
+
+            if (Str::contains($contentType, '/json')) {
+                return json_decode($response->getBody());
+            }
+        }
+
+        return $response;
+    }
+
     public function request(string $method, $uri = '', array $options = []): ResponseInterface
     {
         if (config('apiresource.merge')) {
